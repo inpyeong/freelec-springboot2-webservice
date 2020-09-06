@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor // 기본 자동 생성자 추가
 /**
  * 테이블과 매칭될 클래스임을 나타냄
  * 클래스의 카멜케이스 이름을 언더스코어 네이밍(_)으로 테이블 이름 매칭
