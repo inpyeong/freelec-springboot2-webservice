@@ -17,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HelloControllerTest {
 
     @Autowired // 빈 주입
-    private MockMvc mvc;
+    private MockMvc mvc; // 스프링 MVC 테스트 시작점
 
     @Test
     public void return_hello() throws Exception {
