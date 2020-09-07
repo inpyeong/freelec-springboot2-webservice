@@ -1,7 +1,10 @@
 package com.jojoldu.book.springboot.service.posts;
 
+import com.jojoldu.book.springboot.domain.posts.Posts;
 import com.jojoldu.book.springboot.domain.posts.PostsRepository;
+import com.jojoldu.book.springboot.web.dto.PostsResponseDto;
 import com.jojoldu.book.springboot.web.dto.PostsSaveRequestDto;
+import com.jojoldu.book.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +20,23 @@ public class PostsService {
         return postsRepository.save(requestDto.toEntity()).getId();
     }
 
+    @Transactional
+    public Long update(Long id, PostsUpdateRequestDto requestDto) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        /**
+         * JPA의 영속성 컨텍스트 때문에 쿼리문없이 테이블 수정 가능
+         *
+         * 트랜잭션 안에서 데이터베이스 데이터를 가져오면, 영속성 컨텍스트 유지
+         */
+        posts.update(requestDto.getTitle(), requestDto.getContent());
+
+        return id;
+    }
+
+    public PostsResponseDto findById (Long id) {
+        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+
+        return new PostsResponseDto(entity);
+    }
 }
